@@ -19,11 +19,24 @@ function getAllSnacks(req, res, next) {
 
 function createReview(req, res, next){
   // Add Conditional Gates
-  if(!req.params.reviewId){
-    return next({ status: 400, message: 'Please provide reviewId'})
+  console.log(req.body)
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide snacksId'})
+  }
+  if(!req.body.title){
+    return next({ status: 400, message: 'Please provide title'})
+  }
+  if(!req.body.text){
+    return next({ status: 400, message: 'Please provide text'})
+  }
+  if(!req.body.rating){
+    return next({ status: 400, message: 'Please provide rating'})
+  }
+  if(!req.body.usersId){
+    return next({ status: 400, message: 'Please provide usersId'})
   }
 
-  snacksModel.createReview(req.params.id, req.body.reviewName, req.body.description)
+  snacksModel.createReview(req.params.id, req.body.title, req.body.text, req.body.rating, req.body.usersId)
   .then(function(data){
     return res.status(201).send({ data })
   })
@@ -63,13 +76,16 @@ function editReview(req, res, next) {
   if(!req.params.reviewId){
     return next({ status: 400, message: 'Please provide reviewId'})
   }
-  if(!req.body.reviewName){
-    return next({ status: 400, message: 'Please provide reviewName'})
+  if(!req.body.title){
+    return next({ status: 400, message: 'Please provide title'})
   }
-  if(!req.body.description){
-    return next({ status: 400, message: 'Please provide description'})
+  if(!req.body.text){
+    return next({ status: 400, message: 'Please provide text'})
   }
-  snacksModel.editReview(req.params.id, req.params.reviewId, req.body.reviewName, req.body.description)
+  if(!req.body.rating){
+    return next({ status: 400, message: 'Please provide rating'})
+  }
+  snacksModel.editReview(req.params.id, req.params.reviewId, req.body.title, req.body.text, req.body.rating)
   .then(function(data){
     return res.status(200).send({ data })
   })

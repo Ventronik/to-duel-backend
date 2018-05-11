@@ -14,12 +14,12 @@ function getAllSnacks(users_id){
 
 
 ////////////////////////////////////////////////////////////////////
-// DECK Nested CRUD Methods
+// Review Nested CRUD Methods
 ////////////////////////////////////////////////////////////////////
-function createReview(users_id, reviewName, description) {
+function createReview(snacks_id, title, text, rating, users_id ) {
   return (
     knex('reviews')
-    .insert({ users_id, reviewName, description })
+    .insert({ title, text, rating, snacks_id, users_id})
     .returning('*')
     .then(function([data]){
       return data
@@ -43,12 +43,12 @@ function getOneReview(users_id, id){
   )
 }
 
-function editReview(users_id, id, reviewName, description){
+function editReview(users_id, id, title, text, rating){
   return (
     knex('reviews')
     .where({ users_id })
     .where({ id })
-    .update({ reviewName, description })
+    .update({ title, text, rating})
     .returning('*')
     .then(function([data]){
       return data
