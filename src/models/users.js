@@ -1,5 +1,5 @@
 const knex = require('../../db/knex');
-// const bcrypt = require('bcrypt-as-promised')
+const bcrypt = require('bcrypt-as-promised')
 
 ////////////////////////////////////////////////////////////////////
 // Basic CRUD Methods
@@ -27,24 +27,24 @@ function getOneUser(id){
     .first()
   )
 }
-//
-// function createUser(name, email, password){
-//   return getUserByEmail(email)
-//   .then(function(data){
-//     if(data) throw { status: 400, message:'Email already being used'}
-//     return bcrypt.hash(password, 10)
-//   })
-//   .then(function(hashedPassword){
-//     return (
-//       knex('users')
-//       .insert({ name, email, password: hashedPassword })
-//       .returning('*')
-//       .then(function([data]){
-//         return data
-//       })
-//     )
-//   })
-// }
+
+function createUser(name, email, password){
+  return getUserByEmail(email)
+  .then(function(data){
+    if(data) throw { status: 400, message:'Email already being used'}
+    return bcrypt.hash(password, 10)
+  })
+  .then(function(hashedPassword){
+    return (
+      knex('users')
+      .insert({ name, email, password: hashedPassword })
+      .returning('*')
+      .then(function([data]){
+        return data
+      })
+    )
+  })
+}
 
 
 ////////////////////////////////////////////////////////////////////
@@ -52,7 +52,7 @@ function getOneUser(id){
 ////////////////////////////////////////////////////////////////////
 
 module.exports = {
-  // createUser,
+  createUser,
   getAllUsers,
   getOneUser,
   getUserByEmail
