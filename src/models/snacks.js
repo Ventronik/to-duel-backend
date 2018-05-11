@@ -5,17 +5,24 @@ const knex = require('../../db/knex');
 ////////////////////////////////////////////////////////////////////
 
 function getAllSnacks(users_id){
-  console.log('models getAllSnacks')
   return (
     knex('snacks')
   )
 }
 
+function getOneSnack(id){
+  return (
+    knex('snacks')
+    .where({ id })
+    .first()
+  )
+}
 
 
 ////////////////////////////////////////////////////////////////////
 // Review Nested CRUD Methods
 ////////////////////////////////////////////////////////////////////
+
 function createReview(snacks_id, title, text, rating, users_id ) {
   return (
     knex('reviews')
@@ -76,6 +83,7 @@ function removeReview(users_id, id){
 
 module.exports = {
   getAllSnacks,
+  getOneSnack,
   createReview,
   getAllReviews,
   getOneReview,

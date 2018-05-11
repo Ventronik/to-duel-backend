@@ -5,14 +5,15 @@ const snacksContoller = require('../controllers/snacks')
 ////////////////////////////////////////////////////////////////////
 // Basic CRUD Methods
 ////////////////////////////////////////////////////////////////////
-
+// getAll and getOne snack routes work properly
 router.get('/', snacksContoller.getAllSnacks)
-// router.get('/:id', snacksContoller.getOneUser)
-// router.post('/', snacksContoller.createUser)
+router.get('/:id', snacksContoller.getOneSnack)
 
 ////////////////////////////////////////////////////////////////////
 // Nested Review CRUD Methods
 ////////////////////////////////////////////////////////////////////
+
+// All review routes work properly
 
 router.post('/:id/reviews', snacksContoller.createReview)
 router.get('/:id/reviews', snacksContoller.getAllReviews)

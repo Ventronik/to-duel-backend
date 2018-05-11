@@ -28,7 +28,7 @@ function getOneUser(id){
   )
 }
 
-function createUser(name, email, password){
+function createUser(first_name, last_name, email, password){
   return getUserByEmail(email)
   .then(function(data){
     if(data) throw { status: 400, message:'Email already being used'}
@@ -37,7 +37,7 @@ function createUser(name, email, password){
   .then(function(hashedPassword){
     return (
       knex('users')
-      .insert({ name, email, password: hashedPassword })
+      .insert({ first_name, last_name, email, hashed_password: hashedPassword })
       .returning('*')
       .then(function([data]){
         return data

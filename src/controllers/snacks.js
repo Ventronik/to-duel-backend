@@ -13,6 +13,18 @@ function getAllSnacks(req, res, next) {
   .catch(next)
 }
 
+function getOneSnack(req, res, next) {
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide id'})
+  }
+
+  snacksModel.getOneSnack(req.params.id)
+  .then(function(data){
+    return res.status(200).send({ data })
+  })
+  .catch(next)
+}
+
 ////////////////////////////////////////////////////////////////////
 // Review Nested CRUD Methods
 ////////////////////////////////////////////////////////////////////
@@ -112,6 +124,7 @@ function removeReview(req, res, next) {
 
 module.exports = {
   getAllSnacks,
+  getOneSnack,
   createReview,
   getAllReviews,
   getOneReview,
