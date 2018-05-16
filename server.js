@@ -1,21 +1,38 @@
-
 const express = require('express')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
 const authController = require('./controllers/auth')
-
+const cors = require('cors')
 const app = express();
-app.use(bodyParser.json());
 
-const snacks = require('./routes/snacks');
-app.use('/api', snacks);
+
+app.use(cors())
+app.use(morgan('dev'))
+app.use(bodyParser.json())
+
+//////////////////////////////////////////////////////////////////////////////
+// Routes
+//////////////////////////////////////////////////////////////////////////////
+
+app.use('/auth', require('./src/routes/auth'))
+app.use('/snacks', require('./src/routes/snacks'))
+app.use('/users', require('./src/routes/users'))
+
+//////////////////////////////////////////////////////////////////////////////
+// Default Route
+//////////////////////////////////////////////////////////////////////////////
+
 
 app.use((req, res) => {
   const status = 404;
   const message = `Could not ${req.method} ${req.path}`;
   res.status(status).json({ status, message });
 });
+
+//////////////////////////////////////////////////////////////////////////////
+// Error Handling
+//////////////////////////////////////////////////////////////////////////////
 
 app.use((err, _req, res, _next) => {
   console.error(err);
@@ -25,6 +42,7 @@ app.use((err, _req, res, _next) => {
 });
 
 //////////////////////////////////////////////////////////////////////////////
+
 // Routes
 //////////////////////////////////////////////////////////////////////////////
 
@@ -42,6 +60,7 @@ app.get('/protected/:userId',
         authController.isAuthenticated,
         authController.isSelf,
         function(req, res, next){ res.send({ id: req.claim.id, message: "For your eyes only"}) })
+
 
 const port = process.env.PORT || 3000;
 

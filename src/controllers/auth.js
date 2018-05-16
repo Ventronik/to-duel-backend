@@ -24,9 +24,14 @@ function login(req, res, next){
   if(!req.body.password){
     return next({ status: 400, message: 'Bad request'})
   }
+<<<<<<< HEAD
 
   // 2. Attempt Login
   authModel.login(req.body.username, req.body.password)
+=======
+  // 2. Attempt Login
+  authModel.login(req.body.email, req.body.password)
+>>>>>>> ef89495e5cb76d0a8e4a5e7c94f27fac0179c26f
   .then(function(user){
 
     // 3. Create token
@@ -48,7 +53,10 @@ function getAuthStatus(req, res, next){
 //////////////////////////////////////////////////////////////////////////////
 
 function isAuthenticated(req, res, next){
+<<<<<<< HEAD
 
+=======
+>>>>>>> ef89495e5cb76d0a8e4a5e7c94f27fac0179c26f
   if(!req.headers.authorization){
     return next({ status: 401, message: 'Unauthorized' })
   }
@@ -62,12 +70,16 @@ function isAuthenticated(req, res, next){
     }
 
     req.claim = payload
+<<<<<<< HEAD
 
+=======
+>>>>>>> ef89495e5cb76d0a8e4a5e7c94f27fac0179c26f
     next()
   })
 }
 
 function isSelf(req, res, next){
+<<<<<<< HEAD
 
   if(parseInt(req.params.userId) !== req.claim.id){
     return next({ status: 401, message: 'Unauthorized' })
@@ -78,9 +90,21 @@ function isSelf(req, res, next){
 
 
 
+=======
+  if(parseInt(req.params.userId) !== req.claim.id){
+    return next({ status: 401, message: 'Unauthorized' })
+  }
+  next()
+}
+
+>>>>>>> ef89495e5cb76d0a8e4a5e7c94f27fac0179c26f
 module.exports = {
   login,
   getAuthStatus,
   isAuthenticated,
   isSelf
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ef89495e5cb76d0a8e4a5e7c94f27fac0179c26f
