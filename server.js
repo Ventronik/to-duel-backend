@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
-const authController = require('./controllers/auth')
+const authController = require('./src/controllers/auth')
 const cors = require('cors')
 const app = express();
 
@@ -46,7 +46,7 @@ app.use((err, _req, res, _next) => {
 // Routes
 //////////////////////////////////////////////////////////////////////////////
 
-app.use('/auth', require('./routes/auth'))
+app.use('/auth', require('./src/routes/auth'))
 
 //////////////////////////////////////////////////////////////////////////////
 // example routes, not part of an organized application
