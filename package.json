@@ -9,7 +9,7 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "Scott Hurlow <scott.hurlow@galvanize.com>",
+  "author": "Bryan Kai and Daniel Shikoff",
   "license": "ISC",
   "dependencies": {
     "bcrypt-as-promised": "^1.1.0",
