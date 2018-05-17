@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const path = require('path');
+const authController = require('./src/controllers/auth')
 const cors = require('cors')
 const app = express();
 
@@ -41,8 +42,25 @@ app.use((err, _req, res, _next) => {
 });
 
 //////////////////////////////////////////////////////////////////////////////
-// Starting Server
+
+// Routes
 //////////////////////////////////////////////////////////////////////////////
+
+app.use('/auth', require('./src/routes/auth'))
+
+//////////////////////////////////////////////////////////////////////////////
+// example routes, not part of an organized application
+//////////////////////////////////////////////////////////////////////////////
+
+app.get('/protected',
+        authController.isAuthenticated,
+        function(req, res, next){ res.send({ id: req.claim.id, message: "For authenticated eyes only" }) })
+
+app.get('/protected/:userId',
+        authController.isAuthenticated,
+        authController.isSelf,
+        function(req, res, next){ res.send({ id: req.claim.id, message: "For your eyes only"}) })
+
 
 const port = process.env.PORT || 3000;
 

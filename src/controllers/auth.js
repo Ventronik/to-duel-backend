@@ -24,7 +24,7 @@ function login(req, res, next){
   if(!req.body.password){
     return next({ status: 400, message: 'Bad request'})
   }
-  // 2. Attempt Login
+
   authModel.login(req.body.email, req.body.password)
   .then(function(user){
 
@@ -58,7 +58,6 @@ function isAuthenticated(req, res, next){
     if(err){
       return next({ status: 401, message: 'Unauthorized' })
     }
-
     req.claim = payload
     next()
   })
@@ -70,6 +69,7 @@ function isSelf(req, res, next){
   }
   next()
 }
+
 
 module.exports = {
   login,
