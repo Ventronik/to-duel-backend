@@ -30,8 +30,6 @@ function getOneSnack(req, res, next) {
 ////////////////////////////////////////////////////////////////////
 
 function createReview(req, res, next){
-  // Add Conditional Gates
-  console.log(req.body)
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide snacksId'})
   }
