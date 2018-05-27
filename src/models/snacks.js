@@ -34,26 +34,26 @@ function createReview(snacks_id, title, text, rating, users_id ) {
   )
 }
 
-function getAllReviews(users_id){
+function getAllReviews(snacks_id){
   return (
     knex('reviews')
-    .where({ users_id })
+    .where({ snacks_id })
   )
 }
 
-function getOneReview(users_id, id){
+function getOneReview(snacks_id, id){
   return (
     knex('reviews')
-    .where({ users_id })
+    .where({ snacks_id })
     .where({ id })
     .first()
   )
 }
 
-function editReview(users_id, id, title, text, rating){
+function editReview(snacks_id, id, title, text, rating){
   return (
     knex('reviews')
-    .where({ users_id })
+    .where({ snacks_id })
     .where({ id })
     .update({ title, text, rating})
     .returning('*')
@@ -63,10 +63,10 @@ function editReview(users_id, id, title, text, rating){
   )
 }
 
-function removeReview(users_id, id){
+function removeReview(snacks_id, id){
   return (
     knex('reviews')
-    .where({ users_id })
+    .where({ snacks_id })
     .where({ id })
     .del()
     .returning('*')
