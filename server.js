@@ -5,6 +5,7 @@ const path = require('path');
 const authController = require('./src/controllers/auth')
 const cors = require('cors')
 const app = express();
+require('dotenv').load()
 
 
 app.use(cors())

@@ -29,6 +29,7 @@ function login(req, res, next){
   .then(function(user){
 
     // 3. Create token
+    console.log(process.env)
     const token = jwt.sign({id: user.id}, process.env.SECRET)
 
     // 4. Send back token
