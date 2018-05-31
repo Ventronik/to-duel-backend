@@ -15,3 +15,6 @@ exports.seed = function(knex, Promise) {
       return knex.raw(`SELECT setval('${TABLE_NAME}_id_seq', (SELECT MAX(id) FROM ${TABLE_NAME}));`)
     })
 };
+
+// user email brykai123@gmail.com
+// user password DanielShikoff
