@@ -29,7 +29,8 @@ function login(email, password){
     // save user for later use
     user = data
     // 2. compare password in the database with the password provided by user
-    return bcrypt.compare(password, data.password)
+    console.log(data.password, password)
+    return bcrypt.compare(password, data.hashed_password)
     // password is not hashed. bcrypt hashes it then compares it
     // data.password is hashed
   })
