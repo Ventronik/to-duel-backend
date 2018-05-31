@@ -19,8 +19,6 @@ const userModel = require('./users')
 
 function login(email, password){
   let user
-  console.log('models login')
-  console.log(email)
   // 1. Check to see if user already exists
   return userModel.getUserByEmail(email)
   .then(function(data){
@@ -29,19 +27,17 @@ function login(email, password){
     // save user for later use
     user = data
     // 2. compare password in the database with the password provided by user
-    console.log(data.password, password)
     return bcrypt.compare(password, data.hashed_password)
     // password is not hashed. bcrypt hashes it then compares it
     // data.password is hashed
   })
   .catch(bcrypt.MISMATCH_ERROR, function(){
     // 3. If the passwords do not match, respond with 401 Unauthorized
-    console.log('mismatch')
     throw { status: 401, message: "Unauthorized"}
   })
   .then(function(){
     // 4. strip hashed password away from object
-    delete user.password
+    delete user.hashed_password
     // 5. "return/continue" promise
     return user
   })

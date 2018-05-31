@@ -29,8 +29,7 @@ function login(req, res, next){
   .then(function(user){
 
     // 3. Create token
-    console.log(process.env)
-    const token = jwt.sign({id: user.id}, process.env.SECRET)
+    const token = jwt.sign({id: user.id, name: user.first_name}, process.env.SECRET)
 
     // 4. Send back token
     return res.status(200).send({ token })
@@ -40,7 +39,7 @@ function login(req, res, next){
 
 
 function getAuthStatus(req, res, next){
-    res.status(200).send({id:req.claim.id})
+    res.status(200).send(req.claim)
 }
 
 //////////////////////////////////////////////////////////////////////////////
