@@ -38,6 +38,17 @@ function getAllReviews(snacks_id){
   return (
     knex('reviews')
     .where({ snacks_id })
+
+    .join('users', 'users.id', 'reviews.users_id')
+    .select(
+      'reviews.id as id',
+      'reviews.title as title',
+      'reviews.text as text',
+      'reviews.rating as rating',
+      'reviews.snacks_id as snacks_id',
+      'reviews.users_id as users_id',
+      'users.first_name'
+    )
   )
 }
 
