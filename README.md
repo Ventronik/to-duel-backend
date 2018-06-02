@@ -1,4 +1,5 @@
 # Shikai Snacks Backend
+https://shikai-snacks-backend.herokuapp.com/
 This is the server that shikai-gSnacks-frontend references to populate user, snack, and review data.
 
 ## User Stories
