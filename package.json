@@ -1,7 +1,7 @@
 {
-  "name": "galvanize-snacks",
+  "name": "to-duel",
   "version": "1.0.0",
-  "description": "Snack reviewing application",
+  "description": "Competitive habit tracking",
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
@@ -9,7 +9,7 @@
     "start": "node server.js"
   },
   "keywords": [],
-  "author": "Bryan Kai and Daniel Shikoff",
+  "author": "Bryan Kai and Dustin Ruskell",
   "license": "ISC",
   "dependencies": {
     "bcrypt-as-promised": "^1.1.0",

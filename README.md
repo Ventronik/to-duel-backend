@@ -1,27 +1,15 @@
-# Shikai Snacks Backend
+# To Duel Backend
 
-This is the server that shikai-gSnacks-frontend references to populate user, snack, and review data.  
-https://shikai-snacks-backend.herokuapp.com/
-
-## User Stories
-- **User can view all snacks (already complete)**
-- **User can view details of an individual snack**
-- **User can signup a new account (registration)**
-- **User can login with an existing account (authentication)**
-- **User can post a review of a snack**
-- **User can edit their own review of a snack**
-- **User can delete their own review of a snack**
+This is the server that is referenced by to-duel-frontend to populate user, daily, and duel information.
 
 ## Technologies Used
 * Knex
 * Express
 * PostgreSQL
 
-
-
 ## Entity Relationship Diagram
 
-![snacks ERD](./snacks_erd.jpg)
+![duel ERD](./erd/duel-erd.JPG)
 
 **NOTE:** The migrations and seeds for the `snacks` table are included. You will need to implement the `users` and `reviews` tables yourself following this relationship diagram.
 
@@ -38,16 +26,14 @@ Start by forking and cloning this repo.
 Then install all dependencies
 
 ```shell
-cd shikai-gSnacks-backend
+cd to-duel-backend
 npm install
 ```
 
 Create the databases:
 
 ```shell
-createdb snacks
-createdb users
-createdb reviews
+createdb to_duel_dev
 ```
 
 and run migrations and seeds:
