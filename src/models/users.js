@@ -32,7 +32,8 @@ function createUser(first_name, last_name, email, password){
   return getUserByEmail(email)
   .then(function(data){
     if(data) throw { status: 400, message:'Email already being used'}
-    return bcrypt.hash(password, 10)
+    const hp = bcrypt.hash(password, 10)
+    return hp
   })
   .then(function(hashedPassword){
     return (

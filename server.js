@@ -17,7 +17,7 @@ app.use(bodyParser.json())
 //////////////////////////////////////////////////////////////////////////////
 
 app.use('/auth', require('./src/routes/auth'))
-app.use('/snacks', require('./src/routes/snacks'))
+// app.use('/snacks', require('./src/routes/snacks'))
 app.use('/users', require('./src/routes/users'))
 
 //////////////////////////////////////////////////////////////////////////////
