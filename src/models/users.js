@@ -2,7 +2,7 @@ const knex = require('../../db/knex');
 const bcrypt = require('bcrypt-as-promised')
 
 ////////////////////////////////////////////////////////////////////
-// Basic CRUD Methods
+// USERS
 ////////////////////////////////////////////////////////////////////
 
 
@@ -48,7 +48,7 @@ function createUser(first_name, last_name, email, password){
 }
 
 ////////////////////////////////////////////////////////////////////
-// Daily Nested CRUD Methods
+// DAILIES
 ////////////////////////////////////////////////////////////////////
 
 function createDaily(users_id, name, streak ) {
@@ -116,7 +116,7 @@ function removeDaily(users_id, id){
 }
 
 ////////////////////////////////////////////////////////////////////
-// Daily Nested CRUD Methods
+// DAILY HISTORY
 ////////////////////////////////////////////////////////////////////
 
 function createDailyHistory(
@@ -154,21 +154,100 @@ function getAllDailyHistory(users_id, dailies_id){
   )
 }
 
+////////////////////////////////////////////////////////////////////
+// DUELS
+////////////////////////////////////////////////////////////////////
+
+function createDuel(u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId ) {
+  return (
+    knex('duels')
+    .insert({ u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId })
+    .returning('*')
+    .then(function([data]){
+      return data
+    })
+  )
+}
+
+function getAllUserDuels(users_id){
+  return (
+    knex('duels')
+    .where(function () {
+      this
+        .where('u1_id', users_id)
+        .orWhere('u2_id', users_id)
+    })
+    .join('users', 'users.id', 'duels.u2_id')
+    .select(
+      'duels.id as id',
+      'duels.u1_id as u1_id',
+      'duels.u2_id as u2_id',
+      'duels.startTime as startTime',
+      'duels.endTime as endTime',
+      'duels.u2_accepted as u2_accepted',
+      'duels.u1_confirmed as u1_confirmed',
+      'duels.rejected as rejected',
+      'duels.winnerId as winnerId',
+      'duels.created_at as created_at',
+      'duels.updated_at as updated_at',
+      'users.first_name as opponent_name'
+    )
+  )
+}
+
+function removeDuel(id){
+  return (
+    knex('duels')
+    .where({ id })
+    .del()
+    .returning('*')
+    .then(function([data]){
+      delete data.id
+      return data
+    })
+  )
+}
+
+////////////////////////////////////////////////////////////////////
+// DUEL_DAILIES
+////////////////////////////////////////////////////////////////////
+
+function getAllDuelDailies(duel_id){
+  return (
+    knex('duel_dailies')
+    .where({ duel_id })
+    .join('dailies', 'dailies.id', 'duel_dailies.dailies_id')
+    .select(
+      'duel_dailies.id as id',
+      'duel_dailies.dailies_id as dailies_id',
+      'duel_dailies.duel_id as duel_id',
+      'dailies.users_id as users_id'
+    )
+  )
+}
 
 ////////////////////////////////////////////////////////////////////
 // Export
 ////////////////////////////////////////////////////////////////////
 
 module.exports = {
+  // Users
   createUser,
   getAllUsers,
   getOneUser,
-  getUserByEmail,
+  // Dailies
   createDaily,
   getAllDailies,
   getOneDaily,
   editDaily,
   removeDaily,
+  // Daily History
   createDailyHistory,
   getAllDailyHistory,
+  // Duels
+  createDuel,
+  getAllUserDuels,
+  removeDuel,
+  // Duel dailies
+  getAllDuelDailies
 }
