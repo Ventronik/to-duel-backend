@@ -5,9 +5,9 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex(TABLE_NAME).insert([
-        {id: 1, u1_id: 1, u2_id: 2, startTime:'2018-06-02T18:23:44.046Z', endTime: '2018-06-07T18:23:44.046Z', u2_accepted: true, u1_confirmed: false, winner: 0, rejected: false},
-        {id: 2, u1_id: 3, u2_id: 1, startTime:'2018-06-02T18:23:44.046Z', endTime: '2018-06-07T18:23:44.046Z', u2_accepted: true, u1_confirmed: true, winner: 3, rejected: false},
-        {id: 3, u1_id: 2, u2_id: 3, startTime:'2018-06-02T18:23:44.046Z', endTime: '2018-06-07T18:23:44.046Z', u2_accepted: false, u1_confirmed: true, winner: 3, rejected: false},
+        {id: 1, u1_id: 1, u2_id: 2, startTime:'2018-06-02T18:23:44.046Z', endTime: '2018-06-07T18:23:44.046Z', u2_accepted: true, u1_confirmed: false, rejected: false, winnerId: 0},
+        {id: 2, u1_id: 3, u2_id: 1, startTime:'2018-06-02T18:23:44.046Z', endTime: '2018-06-07T18:23:44.046Z', u2_accepted: true, u1_confirmed: true, rejected: false, winnerId: 3},
+        {id: 3, u1_id: 2, u2_id: 3, startTime:'2018-06-02T18:23:44.046Z', endTime: '2018-06-07T18:23:44.046Z', u2_accepted: false, u1_confirmed: true, rejected: false, winnerId: 3},
       ]);
     })
     .then(() => {

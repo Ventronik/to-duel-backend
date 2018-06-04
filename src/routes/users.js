@@ -3,7 +3,7 @@ const router = express.Router()
 const userController = require('../controllers/users')
 
 ////////////////////////////////////////////////////////////////////
-// Basic CRUD Methods
+// USERS
 ////////////////////////////////////////////////////////////////////
 //Users routes work
 
@@ -12,7 +12,7 @@ router.get('/', userController.getAllUsers)
 router.get('/:id', userController.getOneUser)
 
 ////////////////////////////////////////////////////////////////////
-// Nested Dailies CRUD Methods
+// DAILIES
 ////////////////////////////////////////////////////////////////////
 
 // All dailies routes work properly
@@ -24,7 +24,7 @@ router.put('/:id/dailies/:dailyId', userController.editDaily)
 router.delete('/:id/dailies/:dailyId', userController.removeDaily)
 
 ////////////////////////////////////////////////////////////////////
-// Nested Daily History CRUD Methods
+// DAILY HISTORY
 ////////////////////////////////////////////////////////////////////
 
 // Post and get work
@@ -36,14 +36,14 @@ router.get('/:id/dailies/:dailyId/dailyHistory', userController.getAllDailyHisto
 // router.delete('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.removeDailyHistory)
 
 ////////////////////////////////////////////////////////////////////
-// Nested Duels CRUD Methods
+// DUELS
 ////////////////////////////////////////////////////////////////////
 
-// router.post('/:id/duels', userController.createDuel)
+router.post('/:id/duels', userController.createDuel)
 router.get('/:id/duels', userController.getAllUserDuels)
 // router.get('/:id/duels/:duelId', userController.getOnDuel)
 // router.put('/:id/duels/:duelId', userController.editDuel)
-// router.delete('/:id/duels/:duelId', userController.removeDuel)
+router.delete('/:id/duels/:duelId', userController.removeDuel)
 
 
 

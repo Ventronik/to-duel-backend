@@ -8,7 +8,7 @@ exports.up = function(knex, Promise) {
     table.boolean('u2_accepted').notNullable().defaultTo(false)
     table.boolean('u1_confirmed').notNullable().defaultTo(false)
     table.boolean('rejected').notNullable().defaultTo(false)
-    table.integer('winner').notNullable().defaultTo(0)
+    table.integer('winnerId').notNullable().defaultTo(0)
     table.timestamps(true, true)
   });
 };

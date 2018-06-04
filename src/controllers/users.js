@@ -1,7 +1,7 @@
 const usersModel = require('../models/users')
 
 ////////////////////////////////////////////////////////////////////
-// Basic CRUD Methods
+// USERS
 ////////////////////////////////////////////////////////////////////
 
 function createUser(req, res, next){
@@ -46,7 +46,7 @@ function getOneUser(req, res, next) {
 }
 
 ////////////////////////////////////////////////////////////////////
-// Daily Nested CRUD Methods
+// DAILIES
 ////////////////////////////////////////////////////////////////////
 
 function createDaily(req, res, next){
@@ -133,7 +133,7 @@ function removeDaily(req, res, next) {
 }
 
 ////////////////////////////////////////////////////////////////////
-// Daily History Nested CRUD Methods
+// DAILY HISTORY
 ////////////////////////////////////////////////////////////////////
 
 function createDailyHistory(req, res, next){
@@ -174,8 +174,49 @@ function getAllDailyHistory(req, res, next) {
 }
 
 ////////////////////////////////////////////////////////////////////
-// Duels Nested CRUD Methods
+// DUELS
 ////////////////////////////////////////////////////////////////////
+
+function createDuel(req, res, next){
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide userId'})
+  }
+  if(!req.body.u2_id){
+    return next({ status: 400, message: 'Please provide u2_id'})
+  }
+  if(!req.body.startTime){
+    return next({ status: 400, message: 'Please provide startTime'})
+  }
+  if(!req.body.endTime){
+    return next({ status: 400, message: 'Please provide endTime'})
+  }
+  if(!req.body.u2_accepted){
+    return next({ status: 400, message: 'Please provide u2_accepted'})
+  }
+  if(!req.body.u1_confirmed){
+    return next({ status: 400, message: 'Please provide u1_confirmed'})
+  }
+  if(!req.body.rejected){
+    return next({ status: 400, message: 'Please provide rejected'})
+  }
+  if(!req.body.winnerId){
+    return next({ status: 400, message: 'Please provide winnerId'})
+  }
+
+  usersModel.createDuel(
+    req.params.id,
+    req.body.u2_id,
+    req.body.startTime,
+    req.body.endTime,
+    req.params.u2_accepted,
+    req.body.rejected,
+    req.body.winnerId
+  )
+  .then(function(data){
+    return res.status(201).send({ data })
+  })
+  .catch(next)
+}
 
 function getAllUserDuels(req, res, next) {
   console.log('ctrl getAllUserDuels')
@@ -189,6 +230,16 @@ function getAllUserDuels(req, res, next) {
   .catch(next)
 }
 
+function removeDuel(req, res, next) {
+  if(!req.params.duelId){
+    return next({ status: 400, message: 'Please provide duelId'})
+  }
+  usersModel.removeDuel(req.params.duelId)
+  .then(function(data){
+    return res.status(200).send({ data })
+  })
+  .catch(next)
+}
 
 
 ////////////////////////////////////////////////////////////////////
@@ -206,5 +257,7 @@ module.exports = {
   removeDaily,
   createDailyHistory,
   getAllDailyHistory,
+  createDuel,
   getAllUserDuels,
+  removeDuel,
 }
