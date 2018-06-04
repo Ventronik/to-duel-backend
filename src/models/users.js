@@ -51,16 +51,10 @@ function createUser(first_name, last_name, email, password){
 // Daily Nested CRUD Methods
 ////////////////////////////////////////////////////////////////////
 
-function createDaily(users_id, name,
-  // text,
-  // rating,
-  users_id ) {
+function createDaily(users_id, name, streak ) {
   return (
-    knex('reviews')
-    .insert({ name,
-      // text,
-      // rating,
-      users_id, users_id})
+    knex('dailies')
+    .insert({ name, streak, users_id})
     .returning('*')
     .then(function([data]){
       return data
@@ -70,17 +64,16 @@ function createDaily(users_id, name,
 
 function getAllDailies(users_id){
   return (
-    knex('reviews')
+    knex('dailies')
     .where({ users_id })
-
-    .join('users', 'users.id', 'reviews.users_id')
+    .join('users', 'users.id', 'dailies.users_id')
     .select(
-      'reviews.id as id',
-      'reviews.name as name',
-      // 'reviews.text as text',
-      // 'reviews.rating as rating',
-      'reviews.users_id as users_id',
-      'reviews.users_id as users_id',
+      'dailies.id as id',
+      'dailies.name as name',
+      'dailies.streak as streak',
+      'dailies.users_id as users_id',
+      'dailies.created_at as created_at',
+      'dailies.updated_at as updated_at',
       'users.first_name'
     )
   )
@@ -88,21 +81,19 @@ function getAllDailies(users_id){
 
 function getOneDaily(users_id, id){
   return (
-    knex('reviews')
+    knex('dailies')
     .where({ users_id })
     .where({ id })
     .first()
   )
 }
 
-function editDaily(users_id, id, name, text, rating){
+function editDaily(users_id, id, name, streak){
   return (
-    knex('reviews')
+    knex('dailies')
     .where({ users_id })
     .where({ id })
-    .update({ name, 
-      text, rating
-    })
+    .update({ name, streak })
     .returning('*')
     .then(function([data]){
       return data
@@ -112,7 +103,7 @@ function editDaily(users_id, id, name, text, rating){
 
 function removeDaily(users_id, id){
   return (
-    knex('reviews')
+    knex('dailies')
     .where({ users_id })
     .where({ id })
     .del()
@@ -132,5 +123,10 @@ module.exports = {
   createUser,
   getAllUsers,
   getOneUser,
-  getUserByEmail
+  getUserByEmail,
+  createDaily,
+  getAllDailies,
+  getOneDaily,
+  editDaily,
+  removeDaily
 }

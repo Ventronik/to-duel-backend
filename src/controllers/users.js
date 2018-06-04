@@ -53,25 +53,14 @@ function createDaily(req, res, next){
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide snacksId'})
   }
+  if(!req.body.name){
+    return next({ status: 400, message: 'Please provide name'})
+  }
   if(!req.body.streak){
     return next({ status: 400, message: 'Please provide streak'})
   }
-  // if(!req.body.text){
-  //   return next({ status: 400, message: 'Please provide text'})
-  // }
-  // if(!req.body.rating){
-  //   return next({ status: 400, message: 'Please provide rating'})
-  // }
-  if(!req.body.usersId){
-    return next({ status: 400, message: 'Please provide usersId'})
-  }
 
-  usersModel.createDaily(
-    req.params.id,
-    req.body.streak,
-    // req.body.text,
-    // req.body.rating,
-    req.body.usersId)
+  usersModel.createDaily(req.params.id, req.body.name, req.body.streak)
   .then(function(data){
     return res.status(201).send({ data })
   })
@@ -111,21 +100,17 @@ function editDaily(req, res, next) {
   if(!req.params.dailyId){
     return next({ status: 400, message: 'Please provide dailyId'})
   }
+  if(!req.body.name){
+    return next({ status: 400, message: 'Please provide name'})
+  }
   if(!req.body.streak){
     return next({ status: 400, message: 'Please provide streak'})
   }
-  // if(!req.body.text){
-  //   return next({ status: 400, message: 'Please provide text'})
-  // }
-  // if(!req.body.rating){
-  //   return next({ status: 400, message: 'Please provide rating'})
-  // }
   usersModel.editDaily(
     req.params.id,
     req.params.dailyId,
-    req.body.streak,
-    // req.body.text,
-    // req.body.rating
+    req.body.name,
+    req.body.streak
   )
   .then(function(data){
     return res.status(200).send({ data })
@@ -155,5 +140,10 @@ function removeDaily(req, res, next) {
 module.exports = {
   createUser,
   getAllUsers,
-  getOneUser
+  getOneUser,
+  createDaily,
+  getAllDailies,
+  getOneDaily,
+  editDaily,
+  removeDaily
 }
