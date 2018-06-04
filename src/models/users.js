@@ -154,6 +154,32 @@ function getAllDailyHistory(users_id, dailies_id){
   )
 }
 
+////////////////////////////////////////////////////////////////////
+// Duels Nested CRUD Methods
+////////////////////////////////////////////////////////////////////
+
+function getAllUserDuels(users_id){
+  return (
+    knex('duels')
+    // .where({ u2_id })
+    // .join('users', 'users.id', 'duels.u2_id')
+    // .select(
+    //   'duels.id as id',
+    //   'duels.u1_id as u1_id',
+    //   'duels.u2_id as u2_id',
+    //   'duels.startTime as startTime',
+    //   'duels.endTime as endTime',
+    //   'duels.u2_accepted as u2_accepted',
+    //   'duels.u1_confirmed as u1_confirmed',
+    //   'duels.rejected as rejected',
+    //   'duels.winner as winner',
+    //   'duels.created_at as created_at',
+    //   'duels.updated_at as updated_at',
+    //   'users.first_name as opponent_name'
+    // )
+  )
+}
+
 
 ////////////////////////////////////////////////////////////////////
 // Export
@@ -171,4 +197,5 @@ module.exports = {
   removeDaily,
   createDailyHistory,
   getAllDailyHistory,
+  getAllUserDuels,
 }

@@ -173,6 +173,23 @@ function getAllDailyHistory(req, res, next) {
   .catch(next)
 }
 
+////////////////////////////////////////////////////////////////////
+// Duels Nested CRUD Methods
+////////////////////////////////////////////////////////////////////
+
+function getAllUserDuels(req, res, next) {
+  console.log('ctrl getAllUserDuels')
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide userId'})
+  }
+  usersModel.getAllUserDuels(req.params.id)
+  .then(function(data){
+    return res.status(200).send({ data })
+  })
+  .catch(next)
+}
+
+
 
 ////////////////////////////////////////////////////////////////////
 // Exports
@@ -189,4 +206,5 @@ module.exports = {
   removeDaily,
   createDailyHistory,
   getAllDailyHistory,
+  getAllUserDuels,
 }

@@ -35,6 +35,17 @@ router.get('/:id/dailies/:dailyId/dailyHistory', userController.getAllDailyHisto
 // router.put('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.editDailyHistory)
 // router.delete('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.removeDailyHistory)
 
+////////////////////////////////////////////////////////////////////
+// Nested Duels CRUD Methods
+////////////////////////////////////////////////////////////////////
+
+// router.post('/:id/duels', userController.createDuel)
+router.get('/:id/duels', userController.getAllUserDuels)
+// router.get('/:id/duels/:duelId', userController.getOnDuel)
+// router.put('/:id/duels/:duelId', userController.editDuel)
+// router.delete('/:id/duels/:duelId', userController.removeDuel)
+
+
 
 ////////////////////////////////////////////////////////////////////
 // Export
