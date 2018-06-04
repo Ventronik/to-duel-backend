@@ -25,7 +25,6 @@ function createUser(req, res, next){
 }
 
 function getAllUsers(req, res, next) {
-  console.log('ctrl getAllUsers')
   usersModel.getAllUsers()
   .then(function(data){
     return res.status(200).send({ data })
@@ -157,7 +156,6 @@ function createDailyHistory(req, res, next){
 }
 
 function getAllDailyHistory(req, res, next) {
-  console.log('ctrl getAllDailyHistory')
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide userId'})
   }
@@ -202,7 +200,6 @@ function createDuel(req, res, next){
   if(!req.body.winnerId){
     return next({ status: 400, message: 'Please provide winnerId'})
   }
-
   usersModel.createDuel(
     req.params.id,
     req.body.u2_id,
@@ -219,7 +216,6 @@ function createDuel(req, res, next){
 }
 
 function getAllUserDuels(req, res, next) {
-  console.log('ctrl getAllUserDuels')
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide userId'})
   }
@@ -241,23 +237,44 @@ function removeDuel(req, res, next) {
   .catch(next)
 }
 
+////////////////////////////////////////////////////////////////////
+// DUEL_DAILIES
+////////////////////////////////////////////////////////////////////
+
+function getAllDuelDailies(req, res, next) {
+  if(!req.params.duelId){
+    return next({ status: 400, message: 'Please provide duelId'})
+  }
+  usersModel.getAllDuelDailies(req.params.duelId)
+  .then(function(data){
+    return res.status(200).send({ data })
+  })
+  .catch(next)
+}
+
 
 ////////////////////////////////////////////////////////////////////
 // Exports
 ////////////////////////////////////////////////////////////////////
 
 module.exports = {
+  // Users
   createUser,
   getAllUsers,
   getOneUser,
+  // Dailies
   createDaily,
   getAllDailies,
   getOneDaily,
   editDaily,
   removeDaily,
+  // Daily History
   createDailyHistory,
   getAllDailyHistory,
+  // Duels
   createDuel,
   getAllUserDuels,
   removeDuel,
+  // Duel dailies
+  getAllDuelDailies
 }

@@ -209,22 +209,45 @@ function removeDuel(id){
 }
 
 ////////////////////////////////////////////////////////////////////
+// DUEL_DAILIES
+////////////////////////////////////////////////////////////////////
+
+function getAllDuelDailies(duel_id){
+  return (
+    knex('duel_dailies')
+    .where({ duel_id })
+    .join('dailies', 'dailies.id', 'duel_dailies.dailies_id')
+    .select(
+      'duel_dailies.id as id',
+      'duel_dailies.dailies_id as dailies_id',
+      'duel_dailies.duel_id as duel_id',
+      'dailies.users_id as users_id'
+    )
+  )
+}
+
+////////////////////////////////////////////////////////////////////
 // Export
 ////////////////////////////////////////////////////////////////////
 
 module.exports = {
+  // Users
   createUser,
   getAllUsers,
   getOneUser,
-  getUserByEmail,
+  // Dailies
   createDaily,
   getAllDailies,
   getOneDaily,
   editDaily,
   removeDaily,
+  // Daily History
   createDailyHistory,
   getAllDailyHistory,
+  // Duels
   createDuel,
   getAllUserDuels,
-  removeDuel
+  removeDuel,
+  // Duel dailies
+  getAllDuelDailies
 }
