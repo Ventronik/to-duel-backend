@@ -7,9 +7,9 @@ exports.seed = function(knex, Promise) {
     .then(function () {
       // Inserts seed entries
       return knex(TABLE_NAME).insert([
-        {id: 1, first_name: 'Bryan', last_name: 'Kai', email: 'brykai123@gmail.com', hashed_password: '$2a$10$cHkfsRfdy34Jsy2lt0h.cenUNozgL/vDlO1ulo0X.zFQSSxwJ.DLe'},
-        {id: 2, first_name: 'Dustin', last_name: 'Ruskell', email: 'dustin@gmail.com', hashed_password: '$2a$10$cHkfsRfdy34Jsy2lt0h.cenUNozgL/vDlO1ulo0X.zFQSSxwJ.DLe'},
-        {id: 3, first_name: 'Roger', last_name: 'Schmidt', email: 'roger@gmail.com', hashed_password: '$2a$10$cHkfsRfdy34Jsy2lt0h.cenUNozgL/vDlO1ulo0X.zFQSSxwJ.DLe'}
+        {id: 1, first_name: 'Bryan', last_name: 'Kai', email: 'brykai123@gmail.com', hashed_password: '$2a$10$NgghJcyXJQk5ZZ5iobhX2OznHh6RiXUanGsIGa1CALUJYXq/hsjH2'},
+        {id: 2, first_name: 'Dustin', last_name: 'Ruskell', email: 'dustin@gmail.com', hashed_password: '$2a$10$NgghJcyXJQk5ZZ5iobhX2OznHh6RiXUanGsIGa1CALUJYXq/hsjH2'},
+        {id: 3, first_name: 'Roger', last_name: 'Schmidt', email: 'roger@gmail.com', hashed_password: '$2a$10$NgghJcyXJQk5ZZ5iobhX2OznHh6RiXUanGsIGa1CALUJYXq/hsjH2'}
       ]);
     })
     .then(() => {
@@ -19,4 +19,4 @@ exports.seed = function(knex, Promise) {
 };
 
 // user email brykai123@gmail.com
-// user password DanielShikoff
+// user password 123
