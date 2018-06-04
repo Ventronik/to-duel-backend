@@ -116,6 +116,45 @@ function removeDaily(users_id, id){
 }
 
 ////////////////////////////////////////////////////////////////////
+// Daily Nested CRUD Methods
+////////////////////////////////////////////////////////////////////
+
+function createDailyHistory(
+  // users_id,
+  completed, dailies_id
+) {
+  return (
+    knex('daily_history')
+    .insert({ completed, dailies_id})
+    .returning('*')
+    .then(function([data]){
+      return data
+    })
+  )
+}
+
+function getAllDailyHistory(users_id, dailies_id){
+  return (
+    knex('daily_history')
+    .where({ dailies_id })
+    .join('dailies', 'dailies.id', 'daily_history.dailies_id')
+    // .where({ users_id })
+    .join('users', 'users.id', 'dailies.users_id')
+    .select(
+      'daily_history.id as id',
+      'daily_history.completed as completed',
+      'daily_history.dailies_id as dailies_id',
+      'daily_history.created_at as created_at',
+      'daily_history.updated_at as updated_at',
+      'dailies.users_id as users_id',
+      'dailies.name as name',
+      'users.first_name'
+    )
+  )
+}
+
+
+////////////////////////////////////////////////////////////////////
 // Export
 ////////////////////////////////////////////////////////////////////
 
@@ -128,5 +167,7 @@ module.exports = {
   getAllDailies,
   getOneDaily,
   editDaily,
-  removeDaily
+  removeDaily,
+  createDailyHistory,
+  getAllDailyHistory,
 }
