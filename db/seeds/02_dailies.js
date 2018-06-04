@@ -7,7 +7,7 @@ exports.seed = function(knex, Promise) {
       return knex(TABLE_NAME).insert([
         {id: 1, name: 'brush teeth', streak: 2, users_id: 1},
         {id: 2, name: 'walk dog', streak: 0, users_id: 1},
-        {id: 3, name: 'meditate', streak: 1, users_id: 2 },
+        {id: 3, name: 'meditate', streak: 1, users_id: 2},
       ]);
     })
     .then(() => {
