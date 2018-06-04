@@ -121,7 +121,8 @@ function removeDaily(users_id, id){
 
 function createDailyHistory(
   // users_id,
-  completed, dailies_id
+  dailies_id,
+  completed,
 ) {
   return (
     knex('daily_history')
