@@ -137,7 +137,6 @@ function getAllDailyHistory(users_id, dailies_id){
     knex('daily_history')
     .where({ dailies_id })
     .join('dailies', 'dailies.id', 'daily_history.dailies_id')
-    // .where({ users_id })
     .join('users', 'users.id', 'dailies.users_id')
     .select(
       'daily_history.id as id',
@@ -160,18 +159,17 @@ function getOneDailyHistory(users_id, dailies_id, id){
   )
 }
 
-// function removeDailyHistory(users_id, dailies_id, id){
-//   return (
-//     knex('daily_history')
-//     .where({ id })
-//     .del()
-//     .returning('*')
-//     .then(function([data]){
-//       delete data.id
-//       return data
-//     })
-//   )
-// }
+function patchDailyHistory(id, completed){
+  return (
+    knex('daily_history')
+    .where({ id })
+    .update({ completed })
+    .returning('*')
+    .then(function([data]){
+      return data
+    })
+  )
+}
 
 ////////////////////////////////////////////////////////////////////
 // DUELS
@@ -209,23 +207,43 @@ function getAllUserDuels(users_id){
       'duels.winnerId as winnerId',
       'duels.created_at as created_at',
       'duels.updated_at as updated_at',
+      'duels.archived as archived',
       'users.first_name as opponent_name'
     )
   )
 }
 
-// function removeDuel(id){
-//   return (
-//     knex('duels')
-//     .where({ id })
-//     .del()
-//     .returning('*')
-//     .then(function([data]){
-//       delete data.id
-//       return data
-//     })
-//   )
-// }
+function getOneDuel(id){
+  return (
+    knex('duels')
+    .where({ id })
+    .first()
+  )
+}
+
+function editDuel(id, u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId ) {
+  return (
+    knex('duels')
+    .where({ id })
+    .update({ u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId })
+    .returning('*')
+    .then(function([data]){
+      return data
+    })
+  )
+}
+
+function patchDuel(id, body){
+  return (
+    knex('duels')
+    .where({ id })
+    .update(body)
+    .returning('*')
+    .then(function([data]){
+      return data
+    })
+  )
+}
 
 ////////////////////////////////////////////////////////////////////
 // DUEL_DAILIES
@@ -264,9 +282,13 @@ module.exports = {
   createDailyHistory,
   getAllDailyHistory,
   getOneDailyHistory,
+  patchDailyHistory,
   // Duels
   createDuel,
   getAllUserDuels,
+  getOneDuel,
+  editDuel,
+  patchDuel,
   // Duel dailies
   getAllDuelDailies
 }

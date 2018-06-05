@@ -22,7 +22,6 @@ router.get('/:id/dailies', userController.getAllDailies)
 router.get('/:id/dailies/:dailyId', userController.getOneDaily)
 router.put('/:id/dailies/:dailyId', userController.editDaily)
 router.patch('/:id/dailies/:dailyId', userController.patchDaily)
-// router.delete('/:id/dailies/:dailyId', userController.removeDaily)
 // Don't want to delete, just archive
 
 ////////////////////////////////////////////////////////////////////
@@ -34,7 +33,7 @@ router.patch('/:id/dailies/:dailyId', userController.patchDaily)
 router.post('/:id/dailies/:dailyId/dailyHistory', userController.createDailyHistory)
 router.get('/:id/dailies/:dailyId/dailyHistory', userController.getAllDailyHistory)
 router.get('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.getOneDailyHistory)
-// router.put('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.editDailyHistory)
+router.patch('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.patchDailyHistory)
 // Don't want to delete, just archive
 
 ////////////////////////////////////////////////////////////////////
@@ -43,8 +42,9 @@ router.get('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.
 
 router.post('/:id/duels', userController.createDuel)
 router.get('/:id/duels', userController.getAllUserDuels)
-// router.get('/:id/duels/:duelId', userController.getOnDuel)
-// router.put('/:id/duels/:duelId', userController.editDuel)
+router.get('/:id/duels/:duelId', userController.getOneDuel)
+router.put('/:id/duels/:duelId', userController.editDuel)
+router.patch('/:id/duels/:duelId', userController.patchDuel)
 // Don't want to delete, just archive
 
 ////////////////////////////////////////////////////////////////////
