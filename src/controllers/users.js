@@ -84,7 +84,7 @@ function getOneDaily(req, res, next) {
   if(!req.params.dailyId){
     return next({ status: 400, message: 'Please provide dailyId'})
   }
-
+  const {keyName} = req.body
   usersModel.getOneDaily(req.params.id, req.params.dailyId)
   .then(function(data){
     return res.status(200).send({ data })
@@ -115,6 +115,27 @@ function editDaily(req, res, next) {
     return res.status(200).send({ data })
   })
   .catch(next)
+}
+
+function patchDaily(req, res, next) {
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide userId'})
+  }
+  if(!req.params.dailyId){
+    return next({ status: 400, message: 'Please provide dailyId'})
+  }
+  if(req.body.streak || req.body.archived) {
+    usersModel.patchDaily(
+      req.params.dailyId,
+      req.body,
+    )
+    .then(function(data){
+      return res.status(200).send({ data })
+    })
+    .catch(next)
+  } else {
+    return next({ status: 400, message: 'Please provide streak or archived'})
+  }
 }
 
 function removeDaily(req, res, next) {
@@ -165,6 +186,41 @@ function getAllDailyHistory(req, res, next) {
   usersModel.getAllDailyHistory(
     req.params.id,
     req.params.dailyId)
+  .then(function(data){
+    return res.status(200).send({ data })
+  })
+  .catch(next)
+}
+
+function getOneDailyHistory(req, res, next) {
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide userId'})
+  }
+  if(!req.params.dailyId){
+    return next({ status: 400, message: 'Please provide dailyId'})
+  }
+  if(!req.params.dailyHistoryId){
+    return next({ status: 400, message: 'Please provide dailyHistoryId'})
+  }
+
+  usersModel.getOneDailyHistory(req.params.id, req.params.dailyId, req.params.dailyHistoryId)
+  .then(function(data){
+    return res.status(200).send({ data })
+  })
+  .catch(next)
+}
+
+function removeDailyHistory(req, res, next) {
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide id'})
+  }
+  if(!req.params.dailyId){
+    return next({ status: 400, message: 'Please provide dailyId'})
+  }
+  if(!req.params.dailyHistoryId){
+    return next({ status: 400, message: 'Please provide dailyHistoryId'})
+  }
+  usersModel.removeDailyHistory(req.params.id, req.params.dailyId, req.params.dailyHistoryId)
   .then(function(data){
     return res.status(200).send({ data })
   })
@@ -267,14 +323,14 @@ module.exports = {
   getAllDailies,
   getOneDaily,
   editDaily,
-  removeDaily,
+  patchDaily,
   // Daily History
   createDailyHistory,
   getAllDailyHistory,
+  getOneDailyHistory,
   // Duels
   createDuel,
   getAllUserDuels,
-  removeDuel,
   // Duel dailies
   getAllDuelDailies
 }

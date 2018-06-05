@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
     table.boolean('u1_confirmed').notNullable().defaultTo(false)
     table.boolean('rejected').notNullable().defaultTo(false)
     table.integer('winnerId').notNullable().defaultTo(0)
+    table.boolean('archived').notNullable().defaultTo(false)
     table.timestamps(true, true)
   });
 };

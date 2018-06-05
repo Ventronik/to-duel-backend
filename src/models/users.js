@@ -72,6 +72,7 @@ function getAllDailies(users_id){
       'dailies.name as name',
       'dailies.streak as streak',
       'dailies.users_id as users_id',
+      'dailies.archived as archived',
       'dailies.created_at as created_at',
       'dailies.updated_at as updated_at',
       'users.first_name'
@@ -91,7 +92,6 @@ function getOneDaily(users_id, id){
 function editDaily(users_id, id, name, streak){
   return (
     knex('dailies')
-    .where({ users_id })
     .where({ id })
     .update({ name, streak })
     .returning('*')
@@ -101,15 +101,13 @@ function editDaily(users_id, id, name, streak){
   )
 }
 
-function removeDaily(users_id, id){
+function patchDaily(id, body){
   return (
     knex('dailies')
-    .where({ users_id })
     .where({ id })
-    .del()
+    .update(body)
     .returning('*')
     .then(function([data]){
-      delete data.id
       return data
     })
   )
@@ -154,6 +152,27 @@ function getAllDailyHistory(users_id, dailies_id){
   )
 }
 
+function getOneDailyHistory(users_id, dailies_id, id){
+  return (
+    knex('daily_history')
+    .where({ id })
+    .first()
+  )
+}
+
+// function removeDailyHistory(users_id, dailies_id, id){
+//   return (
+//     knex('daily_history')
+//     .where({ id })
+//     .del()
+//     .returning('*')
+//     .then(function([data]){
+//       delete data.id
+//       return data
+//     })
+//   )
+// }
+
 ////////////////////////////////////////////////////////////////////
 // DUELS
 ////////////////////////////////////////////////////////////////////
@@ -195,18 +214,18 @@ function getAllUserDuels(users_id){
   )
 }
 
-function removeDuel(id){
-  return (
-    knex('duels')
-    .where({ id })
-    .del()
-    .returning('*')
-    .then(function([data]){
-      delete data.id
-      return data
-    })
-  )
-}
+// function removeDuel(id){
+//   return (
+//     knex('duels')
+//     .where({ id })
+//     .del()
+//     .returning('*')
+//     .then(function([data]){
+//       delete data.id
+//       return data
+//     })
+//   )
+// }
 
 ////////////////////////////////////////////////////////////////////
 // DUEL_DAILIES
@@ -240,14 +259,14 @@ module.exports = {
   getAllDailies,
   getOneDaily,
   editDaily,
-  removeDaily,
+  patchDaily,
   // Daily History
   createDailyHistory,
   getAllDailyHistory,
+  getOneDailyHistory,
   // Duels
   createDuel,
   getAllUserDuels,
-  removeDuel,
   // Duel dailies
   getAllDuelDailies
 }
