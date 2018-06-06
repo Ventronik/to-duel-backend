@@ -31,7 +31,7 @@ router.patch('/:id/dailies/:dailyId', userController.patchDaily)
 // Post and get work
 
 router.post('/:id/dailies/:dailyId/dailyHistory', userController.createDailyHistory)
-router.get('/:id/dailies/:dailyId/dailyHistory', userController.getAllDailyHistory)
+router.get('/:id/dailies/:dailyId/dailyHistory', userController.getMostRecentDailyHistoryForToday)
 router.get('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.getOneDailyHistory)
 router.patch('/:id/dailies/:dailyId/dailyHistory/:dailyHistoryId', userController.patchDailyHistory)
 // Don't want to delete, just archive
