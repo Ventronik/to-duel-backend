@@ -51,10 +51,10 @@ function createUser(first_name, last_name, email, password){
 // DAILIES
 ////////////////////////////////////////////////////////////////////
 
-function createDaily(users_id, name, streak ) {
+function createDaily(users_id, name ) {
   return (
     knex('dailies')
-    .insert({ name, streak, users_id})
+    .insert({ name, users_id})
     .returning('*')
     .then(function([data]){
       return data
@@ -132,7 +132,7 @@ function createDailyHistory(
   )
 }
 
-function getAllDailyHistory(users_id, dailies_id){
+function getMostRecentDailyHistoryForToday(users_id, dailies_id){
   return (
     knex('daily_history')
     .where({ dailies_id })
@@ -148,6 +148,9 @@ function getAllDailyHistory(users_id, dailies_id){
       'dailies.name as name',
       'users.first_name'
     )
+    .where(knex.raw('daily_history.created_at > current_date'))
+    .orderBy('created_at', 'desc')
+    .first()
   )
 }
 
@@ -281,7 +284,7 @@ module.exports = {
   patchDaily,
   // Daily History
   createDailyHistory,
-  getAllDailyHistory,
+  getMostRecentDailyHistoryForToday,
   getOneDailyHistory,
   patchDailyHistory,
   // Duels

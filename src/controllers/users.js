@@ -55,11 +55,8 @@ function createDaily(req, res, next){
   if(!req.body.name){
     return next({ status: 400, message: 'Please provide name'})
   }
-  if(!req.body.streak){
-    return next({ status: 400, message: 'Please provide streak'})
-  }
 
-  usersModel.createDaily(req.params.id, req.body.name, req.body.streak)
+  usersModel.createDaily(req.params.id, req.body.name)
   .then(function(data){
     return res.status(201).send({ data })
   })
@@ -176,14 +173,14 @@ function createDailyHistory(req, res, next){
   .catch(next)
 }
 
-function getAllDailyHistory(req, res, next) {
+function getMostRecentDailyHistoryForToday(req, res, next) {
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide userId'})
   }
   if(!req.params.dailyId){
     return next({ status: 400, message: 'Please provide dailyId'})
   }
-  usersModel.getAllDailyHistory(
+  usersModel.getMostRecentDailyHistoryForToday(
     req.params.id,
     req.params.dailyId)
   .then(function(data){
@@ -414,7 +411,7 @@ module.exports = {
   patchDaily,
   // Daily History
   createDailyHistory,
-  getAllDailyHistory,
+  getMostRecentDailyHistoryForToday,
   getOneDailyHistory,
   patchDailyHistory,
   // Duels
