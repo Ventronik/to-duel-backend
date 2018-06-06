@@ -72,6 +72,7 @@ function getAllDailies(users_id){
       'dailies.name as name',
       'dailies.streak as streak',
       'dailies.users_id as users_id',
+      'dailies.archived as archived',
       'dailies.created_at as created_at',
       'dailies.updated_at as updated_at',
       'users.first_name'
@@ -91,7 +92,6 @@ function getOneDaily(users_id, id){
 function editDaily(users_id, id, name, streak){
   return (
     knex('dailies')
-    .where({ users_id })
     .where({ id })
     .update({ name, streak })
     .returning('*')
@@ -101,15 +101,13 @@ function editDaily(users_id, id, name, streak){
   )
 }
 
-function removeDaily(users_id, id){
+function patchDaily(id, body){
   return (
     knex('dailies')
-    .where({ users_id })
     .where({ id })
-    .del()
+    .update(body)
     .returning('*')
     .then(function([data]){
-      delete data.id
       return data
     })
   )
@@ -139,7 +137,6 @@ function getAllDailyHistory(users_id, dailies_id){
     knex('daily_history')
     .where({ dailies_id })
     .join('dailies', 'dailies.id', 'daily_history.dailies_id')
-    // .where({ users_id })
     .join('users', 'users.id', 'dailies.users_id')
     .select(
       'daily_history.id as id',
@@ -151,6 +148,26 @@ function getAllDailyHistory(users_id, dailies_id){
       'dailies.name as name',
       'users.first_name'
     )
+  )
+}
+
+function getOneDailyHistory(users_id, dailies_id, id){
+  return (
+    knex('daily_history')
+    .where({ id })
+    .first()
+  )
+}
+
+function patchDailyHistory(id, completed){
+  return (
+    knex('daily_history')
+    .where({ id })
+    .update({ completed })
+    .returning('*')
+    .then(function([data]){
+      return data
+    })
   )
 }
 
@@ -190,19 +207,39 @@ function getAllUserDuels(users_id){
       'duels.winnerId as winnerId',
       'duels.created_at as created_at',
       'duels.updated_at as updated_at',
+      'duels.archived as archived',
       'users.first_name as opponent_name'
     )
   )
 }
 
-function removeDuel(id){
+function getOneDuel(id){
   return (
     knex('duels')
     .where({ id })
-    .del()
+    .first()
+  )
+}
+
+function editDuel(id, u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId ) {
+  return (
+    knex('duels')
+    .where({ id })
+    .update({ u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId })
     .returning('*')
     .then(function([data]){
-      delete data.id
+      return data
+    })
+  )
+}
+
+function patchDuel(id, body){
+  return (
+    knex('duels')
+    .where({ id })
+    .update(body)
+    .returning('*')
+    .then(function([data]){
       return data
     })
   )
@@ -234,20 +271,25 @@ module.exports = {
   // Users
   createUser,
   getAllUsers,
+  getUserByEmail,
   getOneUser,
   // Dailies
   createDaily,
   getAllDailies,
   getOneDaily,
   editDaily,
-  removeDaily,
+  patchDaily,
   // Daily History
   createDailyHistory,
   getAllDailyHistory,
+  getOneDailyHistory,
+  patchDailyHistory,
   // Duels
   createDuel,
   getAllUserDuels,
-  removeDuel,
+  getOneDuel,
+  editDuel,
+  patchDuel,
   // Duel dailies
   getAllDuelDailies
 }
