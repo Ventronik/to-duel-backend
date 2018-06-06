@@ -271,6 +271,7 @@ module.exports = {
   // Users
   createUser,
   getAllUsers,
+  getUserByEmail,
   getOneUser,
   // Dailies
   createDaily,
