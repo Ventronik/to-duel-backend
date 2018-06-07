@@ -52,7 +52,7 @@ function createDaily(req, res, next){
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide userId'})
   }
-  if(!req.body.name){
+  if(typeof req.body.name===undefined){
     return next({ status: 400, message: 'Please provide name'})
   }
 
@@ -161,7 +161,6 @@ function createDailyHistory(req, res, next){
     return next({ status: 400, message: 'Please provide completed status'})
   }
 
-  console.log('ctrl createDaily', req.body.completed)
   usersModel.createDailyHistory(req.params.dailyId, req.body.completed)
   .then(function(data){
     return res.status(201).send({ data })
