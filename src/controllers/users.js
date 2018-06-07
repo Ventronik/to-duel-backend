@@ -154,19 +154,15 @@ function removeDaily(req, res, next) {
 ////////////////////////////////////////////////////////////////////
 
 function createDailyHistory(req, res, next){
-  // if(!req.params.id){
-  //   return next({ status: 400, message: 'Please provide userId'})
-  // }
   if(!req.params.dailyId){
     return next({ status: 400, message: 'Please provide dailyId'})
   }
-  if(!req.body.completed){
+  if(typeof req.body.completed === undefined){
     return next({ status: 400, message: 'Please provide completed status'})
   }
 
-  usersModel.createDailyHistory(
-    // req.params.id,
-    req.params.dailyId, req.body.completed)
+  console.log('ctrl createDaily', req.body.completed)
+  usersModel.createDailyHistory(req.params.dailyId, req.body.completed)
   .then(function(data){
     return res.status(201).send({ data })
   })
