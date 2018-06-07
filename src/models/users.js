@@ -51,10 +51,10 @@ function createUser(first_name, last_name, email, password){
 // DAILIES
 ////////////////////////////////////////////////////////////////////
 
-function createDaily(users_id, name, streak ) {
+function createDaily(users_id, name ) {
   return (
     knex('dailies')
-    .insert({ name, streak, users_id})
+    .insert({ name, users_id})
     .returning('*')
     .then(function([data]){
       return data
@@ -132,7 +132,7 @@ function createDailyHistory(
   )
 }
 
-function getAllDailyHistory(users_id, dailies_id){
+function getMostRecentDailyHistoryForToday(users_id, dailies_id){
   return (
     knex('daily_history')
     .where({ dailies_id })
@@ -148,6 +148,9 @@ function getAllDailyHistory(users_id, dailies_id){
       'dailies.name as name',
       'users.first_name'
     )
+    .where(knex.raw('daily_history.created_at > current_date'))
+    .orderBy('created_at', 'desc')
+    .first()
   )
 }
 
@@ -175,10 +178,10 @@ function patchDailyHistory(id, completed){
 // DUELS
 ////////////////////////////////////////////////////////////////////
 
-function createDuel(u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId ) {
+function createDuel(u1_id, u2_id, start_time, end_time, u2_accepted, u1_confirmed, rejected, winner_id ) {
   return (
     knex('duels')
-    .insert({ u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId })
+    .insert({ u1_id, u2_id, start_time, end_time, u2_accepted, u1_confirmed, rejected, winner_id })
     .returning('*')
     .then(function([data]){
       return data
@@ -194,21 +197,23 @@ function getAllUserDuels(users_id){
         .where('u1_id', users_id)
         .orWhere('u2_id', users_id)
     })
-    .join('users', 'users.id', 'duels.u2_id')
+    .join('users as u1', 'u1.id', 'duels.u1_id')
+    .join('users as u2', 'u2.id', 'duels.u2_id')
     .select(
       'duels.id as id',
       'duels.u1_id as u1_id',
       'duels.u2_id as u2_id',
-      'duels.startTime as startTime',
-      'duels.endTime as endTime',
+      'duels.start_time as start_time',
+      'duels.end_time as end_time',
       'duels.u2_accepted as u2_accepted',
       'duels.u1_confirmed as u1_confirmed',
       'duels.rejected as rejected',
-      'duels.winnerId as winnerId',
+      'duels.winner_id as winner_id',
       'duels.created_at as created_at',
       'duels.updated_at as updated_at',
       'duels.archived as archived',
-      'users.first_name as opponent_name'
+      'u2.first_name as u2_name',
+      'u1.first_name as u1_name'
     )
   )
 }
@@ -223,7 +228,7 @@ function getAllUserDuels(users_id){
 
 function getOneDuel(id){
   return(
-    knex.raw(`select duels.*, daily_history.*, dailies.name, u1.first_name as user1, u2.first_name as user2 from duels
+    knex.raw(`select duels.id as duel_id, duels.u1_id as duel_u1id, duels.u2_id as duel_u2id, duels.start_time as duel_start, duels.end_time as duel_end, duels.u2_accepted as duel_accepted, duels.u1_confirmed as duel_confirmed, duels.winner_id as duel_winner_id, duels.rejected as duel_rejected, duels.archived as duel_archived, daily_history.id as dh_id, daily_history.dailies_id as dh_dailies_id, daily_history.completed as dh_completed, dailies.name as dailies_name, u1.first_name as user1, u2.first_name as user2 from duels
       inner join duel_dailies on duels.id = duel_dailies.duel_id
       left join dailies on duel_dailies.dailies_id = dailies.id
       inner join daily_history on dailies.id = daily_history.dailies_id
@@ -233,11 +238,11 @@ function getOneDuel(id){
   )
 }
 
-function editDuel(id, u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId ) {
+function editDuel(id, u1_id, u2_id, start_time, end_time, u2_accepted, u1_confirmed, rejected, winner_id ) {
   return (
     knex('duels')
     .where({ id })
-    .update({ u1_id, u2_id, startTime, endTime, u2_accepted, u1_confirmed, rejected, winnerId })
+    .update({ u1_id, u2_id, start_time, end_time, u2_accepted, u1_confirmed, rejected, winner_id })
     .returning('*')
     .then(function([data]){
       return data
@@ -293,7 +298,7 @@ module.exports = {
   patchDaily,
   // Daily History
   createDailyHistory,
-  getAllDailyHistory,
+  getMostRecentDailyHistoryForToday,
   getOneDailyHistory,
   patchDailyHistory,
   // Duels
