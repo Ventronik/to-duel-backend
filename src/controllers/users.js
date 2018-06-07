@@ -52,7 +52,7 @@ function createDaily(req, res, next){
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide userId'})
   }
-  if(typeof req.body.name===undefined){
+  if(!req.body.name){
     return next({ status: 400, message: 'Please provide name'})
   }
 
