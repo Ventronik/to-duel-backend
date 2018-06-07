@@ -289,7 +289,7 @@ function getOneDuel(req, res, next) {
   }
   usersModel.getOneDuel(req.params.duelId)
   .then(function(data){
-    return res.status(200).send({ data })
+    return res.status(200).send({ data: data.rows })
   })
   .catch(next)
 }
