@@ -51,10 +51,10 @@ function createUser(first_name, last_name, email, password){
 // DAILIES
 ////////////////////////////////////////////////////////////////////
 
-function createDaily(users_id, name ) {
+function createDaily(users_id, name, streak ) {
   return (
     knex('dailies')
-    .insert({ name, users_id})
+    .insert({ name, streak, users_id})
     .returning('*')
     .then(function([data]){
       return data
@@ -132,7 +132,7 @@ function createDailyHistory(
   )
 }
 
-function getMostRecentDailyHistoryForToday(users_id, dailies_id){
+function getAllDailyHistory(users_id, dailies_id){
   return (
     knex('daily_history')
     .where({ dailies_id })
@@ -148,9 +148,6 @@ function getMostRecentDailyHistoryForToday(users_id, dailies_id){
       'dailies.name as name',
       'users.first_name'
     )
-    .where(knex.raw('daily_history.created_at > current_date'))
-    .orderBy('created_at', 'desc')
-    .first()
   )
 }
 
@@ -216,11 +213,23 @@ function getAllUserDuels(users_id){
   )
 }
 
+// function getOneDuel(id){
+//   return (
+//     knex('duels')
+//     .where({ id })
+//     .first()
+//   )
+// }
+
 function getOneDuel(id){
-  return (
-    knex('duels')
-    .where({ id })
-    .first()
+  return(
+    knex.raw(`select duels.*, daily_history.*, dailies.name, u1.first_name as user1, u2.first_name as user2 from duels
+      inner join duel_dailies on duels.id = duel_dailies.duel_id
+      inner join dailies on duel_dailies.dailies_id = dailies.id
+      inner join daily_history on dailies.id = daily_history.dailies_id
+      inner join users as u1 on duels.u1_id = u1.id
+      inner join users as u2 on duels.u2_id = u2.id where duels.id = ${id};`
+    )
   )
 }
 
@@ -284,7 +293,7 @@ module.exports = {
   patchDaily,
   // Daily History
   createDailyHistory,
-  getMostRecentDailyHistoryForToday,
+  getAllDailyHistory,
   getOneDailyHistory,
   patchDailyHistory,
   // Duels
