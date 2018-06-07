@@ -184,6 +184,23 @@ function getMostRecentDailyHistoryForToday(req, res, next) {
   .catch(next)
 }
 
+function getCurrentStreak(req, res, next) {
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide userId'})
+  }
+  if(!req.params.dailyId){
+    return next({ status: 400, message: 'Please provide dailyId'})
+  }
+  const today = new Date
+
+  usersModel.getCurrentStreak(
+    req.params.dailyId)
+  .then(function(data){
+    return res.status(200).send({ data })
+  })
+  .catch(next)
+}
+
 function getOneDailyHistory(req, res, next) {
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide userId'})
@@ -407,6 +424,7 @@ module.exports = {
   // Daily History
   createDailyHistory,
   getMostRecentDailyHistoryForToday,
+  getCurrentStreak,
   getOneDailyHistory,
   patchDailyHistory,
   // Duels

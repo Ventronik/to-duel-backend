@@ -133,6 +133,8 @@ function createDailyHistory(
 }
 
 function getMostRecentDailyHistoryForToday(users_id, dailies_id){
+
+
   return (
     knex('daily_history')
     .where({ dailies_id })
@@ -151,6 +153,48 @@ function getMostRecentDailyHistoryForToday(users_id, dailies_id){
     .where(knex.raw('daily_history.created_at > current_date'))
     .orderBy('created_at', 'desc')
     .first()
+  )
+}
+
+function getCurrentStreak(dailies_id, daysAgo = 0, streak = 0){
+  console.log(daysAgo)
+  return (
+    knex('daily_history')
+    .where({ dailies_id })
+    .join('dailies', 'dailies.id', 'daily_history.dailies_id')
+    .join('users', 'users.id', 'dailies.users_id')
+    .select(
+      'daily_history.id as id',
+      'daily_history.completed as completed',
+      'daily_history.dailies_id as dailies_id',
+      'daily_history.created_at as created_at',
+      'daily_history.updated_at as updated_at',
+      'dailies.users_id as users_id',
+      'dailies.name as name',
+      'users.first_name'
+    )
+    // date needs to be in ISO format
+    // event.toISOString()
+    .where(knex.raw(`daily_history.created_at < current_date - ${daysAgo-1}`))
+    .where(knex.raw(`daily_history.created_at > current_date - ${daysAgo}`))
+    .orderBy('created_at', 'desc')
+    .first()
+    .then(row => {
+      console.log('row',row, 'completed', row.completed)
+      console.log(streak)
+      // console.log(typeof row )
+      console.log(!!row && row.completed)
+      if(!!row && row.completed) {
+        return getCurrentStreak(dailies_id, daysAgo+1, streak+1)
+      } else {
+        return streak
+      }
+    })
+    .catch(() => {
+      console.log('catch!')
+      return streak
+    })
+
   )
 }
 
@@ -299,6 +343,7 @@ module.exports = {
   // Daily History
   createDailyHistory,
   getMostRecentDailyHistoryForToday,
+  getCurrentStreak,
   getOneDailyHistory,
   patchDailyHistory,
   // Duels

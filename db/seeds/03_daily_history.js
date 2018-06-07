@@ -161,7 +161,7 @@ exports.seed = function(knex, Promise) {
 
         {id: 107, completed: true, dailies_id: 56, created_at: '2018-06-07T18:23:44.046Z'},
 
-        {id: 108, completed: true, dailies_id: 57, created_at: '2018-06-07T18:23:44.046Z'}                  
+        {id: 108, completed: true, dailies_id: 57, created_at: '2018-06-07T18:23:44.046Z'}
       ]);
     })
     .then(() => {
