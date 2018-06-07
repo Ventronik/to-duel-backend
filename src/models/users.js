@@ -225,7 +225,7 @@ function getOneDuel(id){
   return(
     knex.raw(`select duels.*, daily_history.*, dailies.name, u1.first_name as user1, u2.first_name as user2 from duels
       inner join duel_dailies on duels.id = duel_dailies.duel_id
-      inner join dailies on duel_dailies.dailies_id = dailies.id
+      left join dailies on duel_dailies.dailies_id = dailies.id
       inner join daily_history on dailies.id = daily_history.dailies_id
       inner join users as u1 on duels.u1_id = u1.id
       inner join users as u2 on duels.u2_id = u2.id where duels.id = ${id};`
