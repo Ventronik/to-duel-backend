@@ -160,7 +160,6 @@ function createDailyHistory(req, res, next){
   if(typeof req.body.completed === undefined){
     return next({ status: 400, message: 'Please provide completed status'})
   }
-
   usersModel.createDailyHistory(req.params.dailyId, req.body.completed)
   .then(function(data){
     return res.status(201).send({ data })
@@ -191,10 +190,8 @@ function getCurrentStreak(req, res, next) {
   if(!req.params.dailyId){
     return next({ status: 400, message: 'Please provide dailyId'})
   }
-  const today = new Date
-
   usersModel.getCurrentStreak(
-    req.params.dailyId)
+    req.params.dailyId, req.body.daysAgo)
   .then(function(data){
     return res.status(200).send({ data })
   })
