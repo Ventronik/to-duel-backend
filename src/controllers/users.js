@@ -160,8 +160,6 @@ function createDailyHistory(req, res, next){
   if(typeof req.body.completed === undefined){
     return next({ status: 400, message: 'Please provide completed status'})
   }
-
-  console.log('ctrl createDaily', req.body.completed)
   usersModel.createDailyHistory(req.params.dailyId, req.body.completed)
   .then(function(data){
     return res.status(201).send({ data })
@@ -179,6 +177,21 @@ function getMostRecentDailyHistoryForToday(req, res, next) {
   usersModel.getMostRecentDailyHistoryForToday(
     req.params.id,
     req.params.dailyId)
+  .then(function(data){
+    return res.status(200).send({ data })
+  })
+  .catch(next)
+}
+
+function getCurrentStreak(req, res, next) {
+  if(!req.params.id){
+    return next({ status: 400, message: 'Please provide userId'})
+  }
+  if(!req.params.dailyId){
+    return next({ status: 400, message: 'Please provide dailyId'})
+  }
+  usersModel.getCurrentStreak(
+    req.params.dailyId, req.body.daysAgo)
   .then(function(data){
     return res.status(200).send({ data })
   })
@@ -408,6 +421,7 @@ module.exports = {
   // Daily History
   createDailyHistory,
   getMostRecentDailyHistoryForToday,
+  getCurrentStreak,
   getOneDailyHistory,
   patchDailyHistory,
   // Duels
