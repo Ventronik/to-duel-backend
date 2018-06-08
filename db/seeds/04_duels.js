@@ -9,7 +9,7 @@ exports.seed = function(knex, Promise) {
         {id: 2, u1_id: 2, u2_id: 3, start_time:'2018-06-04T00:00:00.000Z', end_time: '2018-06-08T23:59:59.999Z', u2_accepted: true, u1_confirmed: true, rejected: false, winner_id: 3},
         {id: 3, u1_id: 16, u2_id: 4, start_time:'2018-06-04T00:00:00.000Z', end_time: '2018-06-08T23:59:59.999Z', u2_accepted: false, u1_confirmed: true, rejected: true, winner_id: null},
         {id: 4, u1_id: 16, u2_id: 5, start_time:'2018-05-28T00:00:00.000Z', end_time: '2018-06-01T23:59:59.999Z', u2_accepted: true, u1_confirmed: true, rejected: false, winner_id: 5},
-        {id: 5, u1_id: 16, u2_id: 4, start_time:'2018-06-04T00:00:00.000Z', end_time: '2018-06-08T23:59:59.999Z', u2_accepted: true, u1_confirmed: true, rejected: false, winner_id: null},
+        {id: 5, u1_id: 16, u2_id: 4, start_time:'2018-05-28T00:00:00.000Z', end_time: '2018-06-01T23:59:59.999Z', u2_accepted: true, u1_confirmed: true, rejected: false, winner_id: null},
         {id: 6, u1_id: 16, u2_id: 3, start_time:'2018-06-04T00:00:00.000Z', end_time: '2018-06-08T23:59:59.999Z', u2_accepted: true, u1_confirmed: true, rejected: false, winner_id: null},
         {id: 7, u1_id: 16, u2_id: 2, start_time:'2018-06-04T00:00:00.000Z', end_time: '2018-06-08T23:59:59.999Z', u2_accepted: true, u1_confirmed: true, rejected: false, winner_id: null},
         {id: 8, u1_id: 6, u2_id: 16, start_time:'2018-06-04T00:00:00.000Z', end_time: '2018-06-08T23:59:59.999Z', u2_accepted: true, u1_confirmed: false, rejected: false, winner_id: null},
