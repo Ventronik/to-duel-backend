@@ -78,14 +78,33 @@ function getAllDailies(users_id){
       'users.first_name'
     )
     .then(dailies => {
-      const promiseDailies = dailies.map(dailies => {
-        return knex('daily_history').where('dailies_id', dailies.id)
-        .then(daily_history => {
-          console.log(daily_history)
-          return {...dailies, history: daily_history}
-        })
+      const promiseDailies = dailies.map(daily => {
+        return knex('daily_history').where('dailies_id', daily.id)
+        .then(daily_history => ({...daily, history: daily_history}))
+        .then(daily => updateDailyHistoryForToday(daily.id))
+        .then(todaysDailyCompleted =>  ({...daily, completed: todaysDailyCompleted}))
+        .then(daily => getCurrentStreak(daily.id))
+        .then(streak => ( {...daily, streak }))
       })
       return Promise.all(promiseDailies)
+    })
+  )
+}
+
+function updateDailyHistoryForToday(dailies_id){
+  return (
+    knex('daily_history')
+    .where({ dailies_id })
+    .returning('*')
+    .where(knex.raw('daily_history.created_at > current_date'))
+    .orderBy('created_at', 'desc')
+    .first()
+    .then(response => {
+      if(response){
+        return response.completed
+      } else {
+        return false
+      }
     })
   )
 }
