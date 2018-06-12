@@ -81,10 +81,14 @@ function getAllDailies(users_id){
       const promiseDailies = dailies.map(daily => {
         return knex('daily_history').where('dailies_id', daily.id)
         .then(daily_history => ({...daily, history: daily_history}))
-        .then(daily => updateDailyHistoryForToday(daily.id))
-        .then(todaysDailyCompleted =>  ({...daily, completed: todaysDailyCompleted}))
-        .then(daily => getCurrentStreak(daily.id))
-        .then(streak => ( {...daily, streak }))
+        .then(response => {
+          return updateDailyHistoryForToday(daily.id)
+          .then(todaysDailyCompleted =>  ({...response, completed: todaysDailyCompleted}))
+        })
+        .then(response => {
+          return getCurrentStreak(daily.id)
+          .then(streak => ( {...response, streak }))
+        })
       })
       return Promise.all(promiseDailies)
     })
