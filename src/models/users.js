@@ -89,6 +89,7 @@ function getAllDailies(users_id){
           return getCurrentStreak(daily.id)
           .then(streak => ( {...response, streak }))
         })
+
       })
       return Promise.all(promiseDailies)
     })
