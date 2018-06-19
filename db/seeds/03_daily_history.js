@@ -161,7 +161,18 @@ exports.seed = function(knex, Promise) {
 
         {id: 107, completed: true, dailies_id: 56, created_at: '2018-06-07T18:23:44.046Z'},
 
-        {id: 108, completed: true, dailies_id: 57, created_at: '2018-06-07T18:23:44.046Z'}
+        {id: 108, completed: true, dailies_id: 7, created_at: '2018-06-12T18:23:44.046Z'},
+        {id: 109, completed: true, dailies_id: 7, created_at: '2018-06-13T18:23:44.046Z'},
+        {id: 110, completed: true, dailies_id: 7, created_at: '2018-06-14T18:23:44.046Z'},
+
+        {id: 111, completed: true, dailies_id: 8, created_at: '2018-06-12T18:23:44.046Z'},
+        {id: 112, completed: true, dailies_id: 8, created_at: '2018-06-13T18:23:44.046Z'},
+        {id: 113, completed: true, dailies_id: 8, created_at: '2018-06-14T18:23:44.046Z'},
+
+        {id: 114, completed: true, dailies_id: 9, created_at: '2018-06-12T18:23:44.046Z'},
+        {id: 115, completed: true, dailies_id: 9, created_at: '2018-06-13T18:23:44.046Z'},
+
+        {id: 117, completed: true, dailies_id: 57, created_at: '2018-06-07T18:23:44.046Z'}
       ]);
     })
     .then(() => {
