@@ -5,11 +5,11 @@ exports.up = function(knex, Promise) {
     table.integer('u2_id').notNullable().references('users.id')
     table.dateTime('start_time').notNullable()
     table.dateTime('end_time').notNullable()
-    table.boolean('u2_accepted').notNullable().defaultTo(false)
-    table.boolean('u1_confirmed').notNullable().defaultTo(false)
-    table.boolean('rejected').notNullable().defaultTo(false)
+    table.boolean('u2_accepted').defaultTo(false)
+    table.boolean('u1_confirmed').defaultTo(false)
+    table.dateTime('rejected').defaultTo(null)
     table.integer('winner_id').defaultTo(null)
-    table.boolean('archived').notNullable().defaultTo(false)
+    table.boolean('archived').defaultTo(false)
     table.timestamps(true, true)
   });
 };

@@ -248,37 +248,27 @@ function patchDailyHistory(req, res, next) {
 
 function createDuel(req, res, next){
   if(!req.params.id){
-    return next({ status: 400, message: 'Please provide userId'})
+    return next({ status: 400, message: 'Please provide userId.'})
   }
   if(!req.body.u2_id){
-    return next({ status: 400, message: 'Please provide u2_id'})
+    return next({ status: 400, message: 'Please provide u2_id.'})
   }
   if(!req.body.startTime){
-    return next({ status: 400, message: 'Please provide startTime'})
+    return next({ status: 400, message: 'Please provide startTime.'})
   }
   if(!req.body.endTime){
-    return next({ status: 400, message: 'Please provide endTime'})
+    return next({ status: 400, message: 'Please provide endTime.'})
   }
-  if(!req.body.u2_accepted){
-    return next({ status: 400, message: 'Please provide u2_accepted'})
+  if(!req.body.dailies){
+    return next({ status: 400, message: 'Please provide an array of dailies containing dailies for both users.'})
   }
-  if(!req.body.u1_confirmed){
-    return next({ status: 400, message: 'Please provide u1_confirmed'})
-  }
-  if(!req.body.rejected){
-    return next({ status: 400, message: 'Please provide rejected'})
-  }
-  if(!req.body.winnerId){
-    return next({ status: 400, message: 'Please provide winnerId'})
-  }
+  console.log('HAMBRUGARZ: ', req.body.dailies)
   usersModel.createDuel(
-    req.params.duelId,
+    req.params.id,
     req.body.u2_id,
     req.body.startTime,
     req.body.endTime,
-    req.params.u2_accepted,
-    req.body.rejected,
-    req.body.winnerId
+    req.body.dailies
   )
   .then(function(data){
     return res.status(201).send({ data })

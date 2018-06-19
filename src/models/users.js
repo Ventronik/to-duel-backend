@@ -89,6 +89,7 @@ function getAllDailies(users_id){
           return getCurrentStreak(daily.id)
           .then(streak => ( {...response, streak }))
         })
+
       })
       return Promise.all(promiseDailies)
     })
@@ -247,13 +248,16 @@ function patchDailyHistory(id, completed){
 // DUELS
 ////////////////////////////////////////////////////////////////////
 
-function createDuel(u1_id, u2_id, start_time, end_time, u2_accepted, u1_confirmed, rejected, winner_id ) {
+// function createDuel(u1_id, u2_id, start_time, end_time, dailies ) {
+
+function createDuel(u1_id, u2_id, start_time, end_time, dailies ) {
   return (
     knex('duels')
-    .insert({ u1_id, u2_id, start_time, end_time, u2_accepted, u1_confirmed, rejected, winner_id })
+    .insert({ u1_id, u2_id, start_time, end_time })
     .returning('*')
     .then(function([data]){
-      return data
+      return knex('duel_dailies')
+      .insert(dailies.map(daily=> ({duel_id: data.id, dailies_id: daily})))
     })
   )
 }
