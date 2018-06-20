@@ -55,7 +55,7 @@ Check that you can GET the `/users/16/dailies` endpoint.  If you receive a 200 f
 ## Deployment
 
 This project has been deployed on Heroku at the address:
-
+https://to-duel-backend.herokuapp.com/
 
 
 ## Built With
