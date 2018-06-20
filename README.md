@@ -1,50 +1,80 @@
-# To Duel Backend
+# To Duel (Backend)
 
-This is the server that is referenced by to-duel-frontend to populate user, daily, and duel information.
+This is the backend of the project.
+The front ends can be found at: https://github.com/bryankai/to-duel-frontend
 
-## Technologies Used
-* Knex
-* Express
-* PostgreSQL
+To Duel is a full-stack to-do web application.  The app allows users to engage in multiple concurrent head-to-head challenges with other users to encourage better daily habits.
+
 
 ## Entity Relationship Diagram
 
-![duel ERD](./erd/duel-erd.JPG)
-
-**NOTE:** The migrations and seeds for the `snacks` table are included. You will need to implement the `users` and `reviews` tables yourself following this relationship diagram.
-
-## Routes
-
-| Request Method | Request URL | Request Body | Response Status | Response Body                                                  |
-|----------------|-------------|--------------|-----------------|----------------------------------------------------------------|
-| `POST`         | `/api/users`           | `{ "first_name": "Linus", "last_name": "Torvalds", "email": "linus.torvalds@hotmail.com", "password": "ilovelinux" }` | `200`           | `{ id: 2, "first_name": "Linus", "last_name": "Torvalds", ... } |
+![duel ERD](./erd/duel-erd-clean.JPG)
 
 
-## Setup
+# Getting Started
 
-Start by forking and cloning this repo.
-Then install all dependencies
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+
+### Prerequisites
+
+What things you need to install the software and how to install them
 
 ```shell
-cd to-duel-backend
-npm install
+* fork and clone this repository
+* run npm install
 ```
 
-Create the databases:
+
+### Installing
+
+A step by step series of examples that tell you how to get a development env running to utilize the postgress db
+
+Create the development database:
 
 ```shell
-createdb to_duel_dev
+* createdb to_duel_dev
 ```
 
 and run migrations and seeds:
 
 ```shell
-npm run knex migrate:latest
-npm run knex seed:run
+* npm run knex migrate:latest
+* npm run knex seed:run
 ```
 
-Start the server:
+Finally, start the server:
 
 ```shell
-npm run dev
+* npm start
 ```
+
+Check that you can GET the `/users/16/dailies` endpoint.  If you receive a 200 from the server you are up and running.
+
+
+## Deployment
+
+This project has been deployed on Heroku at the address:
+https://to-duel-backend.herokuapp.com/
+
+
+## Built With
+
+* [JavaScript](https://www.javascript.com/) - The language
+* [Materialize](https://materializecss.com/) - The css framework used
+* [React](https://reactjs.org/) - Frontend library
+* [Redux](https://redux.js.org/) - State container
+* [postgreSQL](https://www.postgresql.org/) - database
+* [Axios](https://github.com/axios/axios) - Promise based HTTP client for the browser and node.js
+* [Node](https://nodejs.org/en/) - Package ecosystem
+
+
+## Contributing
+
+Please send either of the developers a message for details on our code of conduct, and the process for submitting pull requests to us.
+
+
+## Authors
+
+* **Bryan Kai** - *Initial work* - [bryankai](https://github.com/bryankai)
+* **Dustin Ruskell** - *Initial work* - [Ventronik](https://github.com/Ventronik)
