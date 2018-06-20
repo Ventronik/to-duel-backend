@@ -214,6 +214,7 @@ function getCurrentStreak(dailies_id, daysAgo=0, streak = 0){
       if(row && row.completed) {
         return getCurrentStreak(dailies_id, daysAgo+1, streak+1)
       } else {
+        if(daysAgo===0 && streak===0) return getCurrentStreak(dailies_id, daysAgo+1, 0)
         return streak
       }
     })
