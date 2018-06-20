@@ -262,7 +262,7 @@ function createDuel(req, res, next){
   if(!req.body.dailies){
     return next({ status: 400, message: 'Please provide an array of dailies containing dailies for both users.'})
   }
-  console.log('HAMBRUGARZ: ', req.body.dailies)
+
   usersModel.createDuel(
     req.params.id,
     req.body.u2_id,
@@ -345,6 +345,7 @@ function editDuel(req, res, next){
 
 
 function patchDuel(req, res, next) {
+  let patchDuelReturn = null
   if(!req.params.id){
     return next({ status: 400, message: 'Please provide userId'})
   }
@@ -357,10 +358,21 @@ function patchDuel(req, res, next) {
       req.body
     )
     .then(function(data){
-      return res.status(200).send({ data })
+      patchDuelReturn = data
+      if(req.body.dailies){
+        usersModel.addDuelDailies(
+          req.params.duelId,
+          req.body.dailies
+        )
+      }
+    })
+    .then(function(data){
+      return res.status(200).send({ data }, patchDuelReturn)
     })
     .catch(next)
-  } else {
+  } else if (req.body.dailies){
+
+  }else {
     return next({ status: 400, message: 'Please provide a parameter to be patched'})
   }
 }

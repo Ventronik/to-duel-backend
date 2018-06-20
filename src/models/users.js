@@ -337,7 +337,7 @@ function editDuel(id, u1_id, u2_id, start_time, end_time, u2_accepted, u1_confir
   )
 }
 
-function patchDuel(id, body){
+function patchDuel(id, {dailies, ...body}){
   return (
     knex('duels')
     .where({ id })
@@ -346,6 +346,13 @@ function patchDuel(id, body){
     .then(function([data]){
       return data
     })
+  )
+}
+
+function addDuelDailies(duel_id, dailies){
+  return(
+    knex('duel_dailies')
+    .insert(dailies.map(daily=> ({duel_id, dailies_id: daily})))
   )
 }
 
@@ -396,5 +403,6 @@ module.exports = {
   editDuel,
   patchDuel,
   // Duel dailies
-  getAllDuelDailies
+  getAllDuelDailies,
+  addDuelDailies
 }
