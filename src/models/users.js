@@ -351,9 +351,15 @@ function patchDuel(id, {dailies, ...body}){
 }
 
 function addDuelDailies(duel_id, dailies){
+  console.log('ROGER: ', duel_id)
   return(
     knex('duel_dailies')
-    .insert(dailies.map(daily=> ({duel_id, dailies_id: daily})))
+    .insert(dailies.map(daily=> ({duel_id: duel_id, dailies_id: daily})))
+    .returning('*')
+    .then(function([data]){
+      console.log(data)
+      return data
+    })
   )
 }
 

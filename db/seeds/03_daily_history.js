@@ -7,15 +7,19 @@ exports.seed = function(knex, Promise) {
       return knex(TABLE_NAME).insert([
         {id: 1, completed: true, dailies_id: 1, created_at: '2018-06-07T18:23:44.046Z'},
         {id: 2, completed: true, dailies_id: 1, created_at: '2018-06-18T18:23:44.046Z'},
+
         {id: 3, completed: true, dailies_id: 2, created_at: '2018-06-07T18:23:44.046Z'},
+
         {id: 4, completed: true, dailies_id: 49, created_at: '2018-06-16T18:23:44.046Z'},
         {id: 5, completed: true, dailies_id: 49, created_at: '2018-06-17T18:23:44.046Z'},
         {id: 6, completed: true, dailies_id: 49, created_at: '2018-06-18T18:23:44.046Z'},
         // {id: 7, completed: false, dailies_id: 49, created_at: '2018-06-04T18:23:44.046Z'},
+
         {id: 8, completed: true, dailies_id: 50, created_at: '2018-06-04T18:23:44.046Z'},
         {id: 9, completed: true, dailies_id: 50, created_at: '2018-06-05T18:23:44.046Z'},
         {id: 10, completed: true, dailies_id: 50, created_at: '2018-06-06T18:23:44.046Z'},
         {id: 11, completed: true, dailies_id: 50, created_at: '2018-06-07T18:23:44.046Z'},
+
         {id: 12, completed: true, dailies_id: 51, created_at: '2018-06-17T18:23:44.046Z'},
         // {id: 13, completed: false, dailies_id: 51, created_at: '2018-06-06T18:23:44.046Z'},
         {id: 14, completed: true, dailies_id: 51, created_at: '2018-06-18T18:23:44.046Z'},
@@ -23,6 +27,7 @@ exports.seed = function(knex, Promise) {
         {id: 16, completed: true, dailies_id: 52, created_at: '2018-06-07T18:23:44.046Z'},
         // {id: 17, completed: false, dailies_id: 52, created_at: '2018-06-07T18:23:44.046Z'},
         {id: 18, completed: true, dailies_id: 52, created_at: '2018-06-06T18:23:44.046Z'},
+        
         {id: 19, completed: true, dailies_id: 53, created_at: '2018-06-02T18:23:44.046Z'},
         {id: 20, completed: true, dailies_id: 53, created_at: '2018-06-02T18:23:44.046Z'},
         {id: 21, completed: true, dailies_id: 53, created_at: '2018-06-02T18:23:44.046Z'},

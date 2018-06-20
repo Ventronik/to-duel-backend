@@ -360,6 +360,7 @@ function patchDuel(req, res, next) {
     .then(function(data){
       patchDuelReturn = data
       if(req.body.dailies){
+        console.log(req.body.dailies, req.params.duelId)
         usersModel.addDuelDailies(
           req.params.duelId,
           req.body.dailies
@@ -367,7 +368,7 @@ function patchDuel(req, res, next) {
       }
     })
     .then(function(data){
-      return res.status(200).send({ data }, patchDuelReturn)
+      return res.status(200).send({ data, patchDuelReturn })
     })
     .catch(next)
   } else if (req.body.dailies){
